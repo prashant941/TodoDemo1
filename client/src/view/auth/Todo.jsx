@@ -136,7 +136,7 @@ const Todo = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </span>
-        \
+
         <h1 className="text-white font-bold text-5xl text-center pt-9">
           Todo List
         </h1>

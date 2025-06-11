@@ -3,9 +3,9 @@ import { createBrowserRouter } from "react-router-dom";
 import LandingPage1 from "../pages/landing-page";
 import About from "../pages/about-as";
 import Service from "../pages/service";
-import ForgetPassword from "../pages/Auth/forget-password";
+import ForgetPassword from "../pages/auth/forget-password";
 import ResetPassword from "../view/auth/ResetPassword";
-import ChangePassword from "../pages/Auth/change-password";
+import ChangePassword from "../pages/auth/change-password";
 import Todo from "../pages/todo-dasbord";
 import PublicLayout from "../layout/PublicLayout";
 import PrivateLayout from "../layout/PrivateLayout";
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "todo/:id",
-            element: <OrganizationTodo />,
+            element: <OrganizationTodo />,  
           },
         ],
       },

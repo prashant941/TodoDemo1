@@ -12,6 +12,7 @@ import useAuth from "../../hooks/auth";
 
 const OtpInputComponent = () => {
   const [otp, setOtp] = useState();
+  const [errorMessage, setErrMessage] = useState();
   const { resetPassword, isLoading, message, clearMessage } = useAuth();
 
   const navigastion = useNavigate();
@@ -19,14 +20,20 @@ const OtpInputComponent = () => {
   const handleVerifyClick = async () => {
     localStorage.setItem("otp", otp);
     try {
-      await resetPassword({ otp }).unwrap();
-    } catch (error) {}
+      const response = await resetPassword({ otp }).unwrap();
+      setErrMessage("");
+      toast.success(response?.message);
+
+      navigastion("/change-password");
+    } catch (error) {
+      setErrMessage(error);
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 mt-10">
       <h1 className="text-4xl m-14">Enter OTP</h1>
-      {message && (
+      {errorMessage && (
         <div
           id="alert-2"
           class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"

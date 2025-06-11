@@ -34,14 +34,14 @@ export const login = AsyncHandler(async (req, res) => {
   }
   const userExites = await authService({ email });
   if (!userExites) {
-    return res.status(402).json({ message: "User Not Registr" });
+    return res.status(402).json({ message: "Please sign up first" });
   }
   const comparePassword = await bcryptjs.compare(
     password,
     userExites?.password
   );
   if (!comparePassword) {
-    return res.status(401).json({ message: "Invalid Password" });
+    return res.status(401).json({ message: "Invalid email or password" });
   }
   const token = jwt.sign({ id: userExites.uuid }, process.env.JWT_SECRET, {
     expiresIn: "2d",
@@ -90,7 +90,6 @@ export const forgetPassword = AsyncHandler(async (req, res) => {
 });
 
 export const ResertPassword = AsyncHandler(async (req, res) => {
-
   const { otp: sedingOtp, password } = req.body;
   const currentTime = new Date();
   const user = await authService({ otp: sedingOtp });

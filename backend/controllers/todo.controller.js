@@ -96,3 +96,5 @@ export const getMeAllTodo = AsyncHandler(async (req, res) => {
   const AllTodos = await Todo.findAll({ where: { organizationId } });
   res.status(200).json(AllTodos);
 });
+
+
