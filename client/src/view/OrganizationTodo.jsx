@@ -4,6 +4,10 @@ import useTodo from "../hooks/useTodo";
 import useOrganizastion from "../hooks/useOrganizastion";
 import { FaTrash } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+import Swal from "sweetalert2";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import DialogUpdate from "../components/DialogUpdate";
+
 const OrganizationTodo = () => {
   const { id: orgId } = useParams();
   const [todoData, setTodoData] = useState([]);
@@ -30,8 +34,26 @@ const OrganizationTodo = () => {
     setInputValue("");
   };
   const deleteHandle = (id) => {
-    deleteTodo({ id, orgId });
-    setTodoData((prev) => prev.filter((item) => item.uuid !== id));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteTodo({ id, orgId });
+        setTodoData((prev) => prev.filter((item) => item.uuid !== id));
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   return (
@@ -93,7 +115,21 @@ const OrganizationTodo = () => {
                         className="inline-flex items-center justify-center p-2 rounded-md bg-blue-100 text-blue-600 hover:bg-blue-200 transition"
                         title="Edit"
                       >
-                        <MdEdit size={18} />
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <button
+                              className="inline-flex items-center justify-center p-2 rounded-md bg-blue-100 text-blue-600 hover:bg-blue-200 transition"
+                              title="Edit"
+                            >
+                              <MdEdit size={18} />
+                            </button>
+                          </DialogTrigger>
+                          <DialogUpdate
+                            todo={todo}
+                            orgId={orgId}
+                            setTodoData={setTodoData}
+                          />
+                        </Dialog>
                       </button>
                     </td>
                   </tr>

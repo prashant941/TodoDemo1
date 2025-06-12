@@ -6,8 +6,8 @@ import {
   resetPasswordAction,
   signInAction,
   signUpAction,
-} from "../Store/actions/auth.action";
-import { clearMessageAction } from "../Store/reducers/auth.reducer";
+} from "../store/actions/auth.action";
+import { clearMessageAction } from "../store/reducers/auth.reducer";
 
 const useAuth = () => {
   const dispatch = useDispatch();

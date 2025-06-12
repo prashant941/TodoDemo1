@@ -65,21 +65,23 @@ export const DeleteTodo = AsyncHandler(async (req, res) => {
 });
 
 export const updateTodo = AsyncHandler(async (req, res) => {
-  const userId = req.id;
-  const { title } = req.body;
+  const { title, orgId } = req.body;
 
   const { id: todoId } = req.params;
   if (!validate(todoId)) {
     return res.status(400).json({ message: "Invalid UUID format" });
   }
-  const TargetTodo = await Todo.findOne({ where: { uuid: todoId } });
+  const TargetTodo = await Todo.findOne({
+    where: { uuid: todoId, organizationId: orgId },
+  });
   if (!TargetTodo) {
     return res.status(404).json({ message: "Todo Not Found" });
   }
-  if (TargetTodo.userId !== userId) {
-    return res.status(402).json({ message: "Not Access" });
-  }
-  await Todo.update({ title }, { where: { uuid: todoId } });
+
+  await Todo.update(
+    { title },
+    { where: { uuid: todoId, organizationId: orgId } }
+  );
   return res.status(200).json({ message: "Todo Update Successfully" });
 });
 
@@ -96,5 +98,3 @@ export const getMeAllTodo = AsyncHandler(async (req, res) => {
   const AllTodos = await Todo.findAll({ where: { organizationId } });
   res.status(200).json(AllTodos);
 });
-
-

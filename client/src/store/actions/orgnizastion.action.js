@@ -68,6 +68,7 @@ export const invitastionAllOrgAction = createAsyncThunk(
       const response = await api.get("org/myInviteOrg", {
         withCredentials: true,
       });
+
       return fulfillWithValue(response?.data);
     } catch (error) {
       return rejectWithValue(error?.response?.data?.message);
@@ -132,4 +133,3 @@ export const createTodoForOrgAction = createAsyncThunk(
     }
   }
 );
-

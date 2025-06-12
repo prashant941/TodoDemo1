@@ -7,7 +7,7 @@ import LoginForm from "../components/LoginForm";
 const Home = () => {
   const isLogin = useSelector((state) => state.auth.isAuthenticated);
   if (isLogin) {
-    return <Navigate to={"/todo"} />;
+    return <Navigate to={"/dashboard"} />;
   }
   return (
     <div className="flex flex-col min-h-screen bg-white text-gray-800">

@@ -4,10 +4,10 @@ import {
   deleteTodoAction,
   getAllTodoAction,
   updateTodo,
-} from "../Store/actions/todo.actions";
-import { addTodoOptimistic, removeTodo } from "../Store/reducers/todo.reducer";
+} from "../store/actions/todo.actions";
+import { addTodoOptimistic, removeTodo } from "../store/reducers/todo.reducer";
 import { data } from "react-router-dom";
-import { allOrgTodoAction } from "../Store/actions/orgnizastion.action";
+import { allOrgTodoAction } from "../store/actions/orgnizastion.action";
 
 const useTodo = () => {
   const { todos } = useSelector((state) => state.todo);

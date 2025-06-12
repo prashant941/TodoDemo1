@@ -6,24 +6,29 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
+
 import useTodo from "../hooks/useTodo";
 
-const DialogUpdate = ({ todo }) => {
+const DialogUpdate = ({ todo, orgId, setTodoData }) => {
   const [title, setTitle] = useState(todo.title);
-  const { todoUpdate, getAllTodo } = useTodo();
+  const { todoUpdate, getAllTodo, orgTodo } = useTodo();
 
-  // Update state when todo changes
   useEffect(() => {
     setTitle(todo.title);
   }, [todo]);
 
-  // Handle submit
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (!title.trim()) return;
 
-    await todoUpdate({ id: todo.uuid, data: { title } });
-    getAllTodo(); // refresh the list after update
+    await todoUpdate({ id: todo.uuid, data: { title, orgId } });
+    const response = orgTodo(orgId);
+    const data = await response.unwrap();
+    console.log(data);
+
+    setTodoData(data);
+
+    setTitle("");
   };
 
   return (

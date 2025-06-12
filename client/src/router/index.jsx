@@ -25,21 +25,30 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "dashboard",
     element: <PrivateLayout />,
     children: [
-      { path: "todo", element: <Todo /> },
       {
-        path: "all-Organization",
-        element: <OrganizationTabs />,
-        children: [
-          {
-            path: "todo/:id",
-            element: <OrganizationTodo />,  
-          },
-        ],
+        index: true,
+        element: <Todo />,
+      },
+      {
+        path: "todo/:id",
+        element: <OrganizationTodo />,
       },
     ],
   },
 ]);
 
 export default router;
+
+// {
+//   path: "all-Organization",
+//   element: <OrganizationTabs />,
+//   children: [
+//     {
+//       path: "todo/:id",
+//       element: <OrganizationTodo />,
+//     },
+//   ],
+// },
