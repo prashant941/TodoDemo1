@@ -3,7 +3,7 @@ import { baseUrl } from "../../components/baseUrl";
 import { toast } from "sonner";
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/auth";
+import useAuth from "../../hooks/useAuth";
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);

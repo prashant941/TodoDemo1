@@ -83,7 +83,7 @@ export const pendingOrgAction = createAsyncThunk(
       const response = await api.get("org/pending", { withCredentials: true });
       return fulfillWithValue(response?.data);
     } catch (error) {
-      rejectWithValue(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data?.message);
     }
   }
 );

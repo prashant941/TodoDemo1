@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import Loader from "./Loader";
-import useAuth from "../hooks/auth";
+import useAuth from "../hooks/useAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../schema/auth.schema";
 
@@ -19,6 +19,7 @@ const Registrastion = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(registerSchema),
   });
@@ -29,6 +30,7 @@ const Registrastion = () => {
     try {
       await signUp(data).unwrap();
       toast.success("sign-up successfully");
+      reset();
     } catch (error) {
       console.log("Register Faild");
     }

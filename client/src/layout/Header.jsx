@@ -7,7 +7,7 @@ import Registrastion from "../components/Registrastion";
 //   useLogoutUserMutation,
 // } from "../Store/Services/userApliSlice";
 import { Link } from "react-router-dom";
-import useAuth from "../hooks/auth";
+import useAuth from "../hooks/useAuth";
 import { toast } from "sonner";
 import { FaBell } from "react-icons/fa";
 

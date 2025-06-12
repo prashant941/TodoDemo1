@@ -8,7 +8,7 @@ import {
 import { baseUrl } from "../../components/baseUrl";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/auth";
+import useAuth from "../../hooks/useAuth";
 
 const OtpInputComponent = () => {
   const [otp, setOtp] = useState();

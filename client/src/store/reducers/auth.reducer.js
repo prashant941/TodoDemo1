@@ -9,7 +9,7 @@ import {
 } from "../actions/auth.action";
 
 const initialState = {
-  user: null,
+  user: "",
   isAuthenticated: false,
   isLoading: "",
   isError: false,
@@ -50,9 +50,11 @@ const authSlice = createSlice({
       state.isError = false;
     });
     builder.addCase(signInAction.fulfilled, (state, action) => {
+      console.log("SignIn Action Payload:", action.payload);
+
       state.isLoading = "";
       state.message = action.payload.message;
-      state.user = action.payload.data;
+      state.user = action?.payload?.data?.data;
       state.isError = false;
       state.isAuthenticated = true;
     });

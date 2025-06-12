@@ -22,9 +22,12 @@ export const signInAction = createAsyncThunk(
       const response = await api.post("auth/sign-in", arg, {
         withCredentials: true,
       });
+      console.log(response);
+
       return fulfillWithValue({
         message: response?.data.message || "Faild",
         status: response?.status,
+        data: response?.data,
       });
     } catch (error) {
       return rejectWithValue({

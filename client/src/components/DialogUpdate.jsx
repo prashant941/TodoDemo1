@@ -11,7 +11,7 @@ import useTodo from "../hooks/useTodo";
 
 const DialogUpdate = ({ todo, orgId, setTodoData }) => {
   const [title, setTitle] = useState(todo.title);
-  const { todoUpdate, getAllTodo, orgTodo } = useTodo();
+  const { todoUpdate, orgTodo } = useTodo();
 
   useEffect(() => {
     setTitle(todo.title);
@@ -54,7 +54,6 @@ const DialogUpdate = ({ todo, orgId, setTodoData }) => {
         </div>
 
         <DialogFooter>
-          {/* Cancel Button */}
           <DialogClose asChild>
             <button
               type="button"

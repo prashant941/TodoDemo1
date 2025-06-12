@@ -18,7 +18,7 @@ import {
 import { useForm } from "react-hook-form";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
-
+import useAuth from "../../hooks/useAuth";
 const Todo = () => {
   const {
     invitastionAll,
@@ -29,6 +29,8 @@ const Todo = () => {
     setOrgname: toSetOrgName,
     orgs,
   } = useOrganizastion();
+  const { user } = useAuth();
+
   const navigastion = useNavigate();
   const [acceptedOrganizations, setAcceptedOrganizations] = useState([]);
   const [allOrganizations, setAllOrganizations] = useState([]);
@@ -128,6 +130,10 @@ const Todo = () => {
 
   return (
     <div className="min-h-[88vh] flex items-center justify-center bg-gray-100 p-4">
+      <h1 className="absolute top-36 left-1/2 transform -translate-x-1/2 text-4xl font-bold text-gray-800">
+        Welcome Back <span className="text-blue-600">{user?.name}</span>
+      </h1>
+
       <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg overflow-hidden relative">
         <div className="absolute top-4 right-4">
           <Dialog>

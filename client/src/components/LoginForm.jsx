@@ -15,7 +15,7 @@ import {
 import Loader from "./Loader";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import useAuth from "../hooks/auth";
+import useAuth from "../hooks/useAuth";
 
 const LoginForm = () => {
   const {
