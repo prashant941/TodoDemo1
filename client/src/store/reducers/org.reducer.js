@@ -17,8 +17,7 @@ const orgSlice = createSlice({
       state.orgName = action.payload;
     },
     addAcceptedOrg: (state, action) => {
-      console.log("Adding accepted org:", action.payload);
-      // Check if the organization already exists in the list
+
 
       state.orgs.push(action.payload);
     },

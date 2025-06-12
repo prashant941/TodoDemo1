@@ -58,6 +58,7 @@ const Header = () => {
           <ul className="flex gap-7 mr-16 text-[20px] items-center">
             {NavList.map((items, i) => (
               <Link
+                key={i}
                 to={`${
                   items.toLowerCase() === "home"
                     ? "/"

@@ -45,7 +45,6 @@ const Todo = () => {
     handleSubmit: orgHandleSubmit,
     reset: orgRest,
   } = useForm();
-  console.log("orgs", orgs);
 
   useEffect(() => {
     (async () => {
@@ -120,7 +119,6 @@ const Todo = () => {
     setEmail("");
   };
   const todoView = (id, name) => {
-    console.log("id", id);
 
     if (!id) return;
 
@@ -226,7 +224,6 @@ const Todo = () => {
             My Organizations
           </h3>
           <ul className="space-y-3">
-            {console.log(allOrganizations)}
             {allOrganizations.length > 0 ? (
               allOrganizations.map((org) => (
                 <li

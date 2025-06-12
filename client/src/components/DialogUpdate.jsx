@@ -24,7 +24,6 @@ const DialogUpdate = ({ todo, orgId, setTodoData }) => {
     await todoUpdate({ id: todo.uuid, data: { title, orgId } });
     const response = orgTodo(orgId);
     const data = await response.unwrap();
-    console.log(data);
 
     setTodoData(data);
 
