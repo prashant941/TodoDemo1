@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "../schema/auth.schema";
+import { loginSchema } from "../../schema/auth.schema";
 
 import {
   Dialog,
@@ -12,10 +12,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import Loader from "./Loader";
+import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 const LoginForm = () => {
   const {
@@ -69,7 +69,7 @@ const LoginForm = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Email
+                  Email 
                 </label>
                 <input
                   {...register("email")}

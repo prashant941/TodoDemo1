@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   createOrganizationAction,
+  getMyOrganizationAction,
   invitastionAllOrgAction,
 } from "../actions/orgnizastion.action";
 const initialState = {
@@ -8,6 +9,7 @@ const initialState = {
   message: "",
   orgName: "",
   orgs: [],
+  myOrgs: [],
 };
 const orgSlice = createSlice({
   name: "org",
@@ -17,8 +19,6 @@ const orgSlice = createSlice({
       state.orgName = action.payload;
     },
     addAcceptedOrg: (state, action) => {
-
-
       state.orgs.push(action.payload);
     },
   },
@@ -43,6 +43,17 @@ const orgSlice = createSlice({
       state.loding = "";
     });
     builder.addCase(invitastionAllOrgAction.rejected, (state, action) => {
+      state.message = action.payload;
+      state.loding = "";
+    });
+    builder.addCase(getMyOrganizationAction.pending, (state) => {
+      state.loding = "fetchingMyOrg";
+    });
+    builder.addCase(getMyOrganizationAction.fulfilled, (state, action) => {
+      state.myOrgs = action.payload;
+      state.loding = "";
+    });
+    builder.addCase(getMyOrganizationAction.rejected, (state, action) => {
       state.message = action.payload;
       state.loding = "";
     });

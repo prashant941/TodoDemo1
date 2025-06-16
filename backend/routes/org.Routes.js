@@ -8,6 +8,7 @@ import {
   pendingInvitastion,
   respondInvite,
   sendInvite,
+  updateOrg,
 } from "../controllers/org.controller.js";
 const router = express.Router();
 router.post("/", authMiddleware, createOrganization);
@@ -17,4 +18,5 @@ router.get("/myorg", authMiddleware, myOrg);
 router.delete("/deleteOrg/:orgId", authMiddleware, deleteOrg);
 router.get("/myInviteOrg", authMiddleware, allInvitastion);
 router.get("/pending", authMiddleware, pendingInvitastion);
+router.post("/orgUpdate/:orgId", authMiddleware, updateOrg);
 export default router;

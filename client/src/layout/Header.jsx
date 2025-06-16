@@ -1,29 +1,36 @@
 import React, { useEffect } from "react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import LoginForm from "../components/LoginForm";
-import Registrastion from "../components/Registrastion";
+import LoginForm from "../view/auth/LoginForm";
+import Registrastion from "../view/auth/Registrastion";
 // import {
 //   apiSlice,
 //   useLogoutUserMutation,
 // } from "../Store/Services/userApliSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { toast } from "sonner";
 import { FaBell } from "react-icons/fa";
 
+import useOrganizastion from "../hooks/useOrganizastion";
+import { addAcceptedOrg } from "../store/reducers/org.reducer";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import useOrganizastion from "../hooks/useOrganizastion";
-import { addAcceptedOrg } from "../store/reducers/org.reducer";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { FaArrowRight } from "react-icons/fa";
 const Header = () => {
   const NavList = ["Home", "About", "Service"];
   const { isAuthenticated: isUser, logout } = useAuth();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [bellCount, setBellCount] = React.useState([]);
-  const { pendingOrg, orgAccepte, orgsHandle } = useOrganizastion();
+  const { pendingOrg, orgAccepte, orgsHandle, myOrgs } = useOrganizastion();
+  const navigate = useNavigate();
+
   useEffect(() => {
     (async () => {
       try {
@@ -38,6 +45,7 @@ const Header = () => {
   const Logout = async () => {
     const { payload } = await logout();
     toast.success(payload);
+    return navigate("/");
   };
 
   const accepteRequest = async (id, name) => {
@@ -48,6 +56,22 @@ const Header = () => {
     );
     toast.success("invitation accepted");
   };
+  const changingOrg = () => {
+    navigate("/switch");
+    localStorage.removeItem("orgId");
+    setDropdownOpen(false);
+  };
+  const manageHandle = () => {
+    navigate("/manage-organization");
+    setDropdownOpen(false);
+  };
+  // const orgName = localStorage.getItem("orgName");
+  // useEffect(() => {
+  //   if (!isUser) {
+  //     localStorage.removeItem("orgId");
+  //     localStorage.removeItem("orgName");
+  //   }
+  // }, [isUser]);
   return (
     <>
       <header className="bg-sky-500 flex justify-between items-center text-white">
@@ -92,12 +116,41 @@ const Header = () => {
               </>
             ) : (
               <>
-                <button
-                  className="bg-red-500 px-2 cursor-pointer py-1 rounded-3xl outline-none border-none "
-                  onClick={Logout}
-                >
-                  logout
-                </button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="outline-none border-none">
+                    <Avatar>
+                      <AvatarImage
+                        src="https://github.com/shadcn.png"
+                        alt="@shadcn"
+                      />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Billing</DropdownMenuItem>
+                    {myOrgs.length > 0 && (
+                      <DropdownMenuItem onClick={manageHandle}>
+                        {" "}
+                        manage organizations
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuItem onClick={() => changingOrg()}>
+                      Change Organization
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={Logout}
+                    >
+                      <div className="flex justify-between  items-center  w-full">
+                        <span>Logout</span>
+                        <FaArrowRight color="red" />
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
             )}
             {isUser && (

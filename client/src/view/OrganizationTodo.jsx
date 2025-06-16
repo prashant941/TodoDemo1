@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useTodo from "../hooks/useTodo";
 import useOrganizastion from "../hooks/useOrganizastion";
 import { FaTrash } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import DialogUpdate from "../components/DialogUpdate";
+import DialogUpdate from "./DialogUpdate";
 
 const OrganizationTodo = () => {
-  const { id: orgId } = useParams();
+  const navigate = useNavigate();
+  const orgId = localStorage.getItem("orgId");
+  if (!orgId) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <h1 className="text-2xl font-bold text-red-500">
+          Please select an organization to view the todo list.
+        </h1>
+      </div>
+    );
+  }
   const [todoData, setTodoData] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const { orgname, createTodoForOrg } = useOrganizastion();
+  const { createTodoForOrg } = useOrganizastion();
   const { orgTodo, deleteTodo } = useTodo();
 
   useEffect(() => {
@@ -21,7 +31,10 @@ const OrganizationTodo = () => {
         const data = await orgTodo(orgId).unwrap();
         setTodoData(data);
       } catch (error) {
-        console.log(error);
+        console.log("error");
+        navigate("/switch");
+
+        localStorage.removeItem("orgId");
       }
     })();
   }, [orgId]);
@@ -58,7 +71,10 @@ const OrganizationTodo = () => {
 
   return (
     <div className="w-full bg-white p-6 rounded-2xl shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-center">{orgname} Todo</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">
+        Organization Name{" "}
+        <span className="text-sky-500">{localStorage.getItem("orgName")}</span>
+      </h2>
       <form
         className="flex flex-col items-center space-y-4"
         onSubmit={handleSubmit}
@@ -104,7 +120,7 @@ const OrganizationTodo = () => {
                     </td>
                     <td className="flex gap-2 py-2">
                       <button
-                        className="inline-flex items-center justify-center p-2 rounded-md bg-red-100 text-red-600 hover:bg-red-200 transition"
+                        className="inline-flex cursor-pointer items-center justify-center p-2 rounded-md bg-red-100 text-red-600 hover:bg-red-200 transition"
                         title="Delete"
                         onClick={() => deleteHandle(todo.uuid)}
                       >
@@ -118,7 +134,7 @@ const OrganizationTodo = () => {
                         <Dialog>
                           <DialogTrigger asChild>
                             <button
-                              className="inline-flex items-center justify-center p-2 rounded-md bg-blue-100 text-blue-600 hover:bg-blue-200 transition"
+                              className="inline-flex items-center justify-center p-0 rounded-md bg-blue-100 text-blue-600 hover:bg-blue-200 transition cursor-pointer"
                               title="Edit"
                             >
                               <MdEdit size={18} />

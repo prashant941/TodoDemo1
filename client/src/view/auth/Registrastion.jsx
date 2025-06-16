@@ -9,10 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Loader from "./Loader";
-import useAuth from "../hooks/useAuth";
+import Loader from "../../components/Loader";
+import useAuth from "../../hooks/useAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema } from "../schema/auth.schema";
+import { registerSchema } from "../../schema/auth.schema";
 
 const Registrastion = () => {
   const {
@@ -28,6 +28,7 @@ const Registrastion = () => {
 
   const onSubmit = async (data) => {
     try {
+      localStorage.removeItem("orgId");
       await signUp(data).unwrap();
       toast.success("sign-up successfully");
       reset();

@@ -133,3 +133,19 @@ export const createTodoForOrgAction = createAsyncThunk(
     }
   }
 );
+
+export const updateOrgAction = createAsyncThunk(
+  "org/update",
+  async ({ id, name }, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await api.post(
+        `org/orgUpdate/${id}`,
+        { name },
+        { withCredentials: true }
+      );
+      return fulfillWithValue(response?.data);
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.message);
+    }
+  }
+);

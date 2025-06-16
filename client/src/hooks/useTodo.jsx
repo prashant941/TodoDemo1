@@ -6,7 +6,6 @@ import {
   updateTodo,
 } from "../store/actions/todo.actions";
 import { addTodoOptimistic, removeTodo } from "../store/reducers/todo.reducer";
-import { data } from "react-router-dom";
 import { allOrgTodoAction } from "../store/actions/orgnizastion.action";
 
 const useTodo = () => {
@@ -46,3 +45,4 @@ const useTodo = () => {
   };
 };
 export default useTodo;
+

@@ -2,12 +2,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "./auth/LoginForm";
 
 const Home = () => {
   const isLogin = useSelector((state) => state.auth.isAuthenticated);
+  const orgId = localStorage.getItem("orgId");
+  if (isLogin && orgId) {
+    return <Navigate to={"/todo"} />;
+  }
   if (isLogin) {
-    return <Navigate to={"/dashboard"} />;
+    return <Navigate to={"/switch"} />;
   }
   return (
     <div className="flex flex-col min-h-screen bg-white text-gray-800">

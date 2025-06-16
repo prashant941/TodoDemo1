@@ -1,20 +1,25 @@
 import { createContext, useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
+import useOrganizastion from "../hooks/useOrganizastion";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const { profile } = useAuth();
-  const [isLodin, setIsLoding] = useState(true);
+  const { getMyOrganizastion } = useOrganizastion();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const response = await profile();
+      await profile();
+      await getMyOrganizastion();
+      setLoading(false);
     })();
   }, []);
-  return (
-    <>
-      <AuthContext.Provider>{children}</AuthContext.Provider>
-    </>
-  );
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return <AuthContext.Provider>{children}</AuthContext.Provider>;
 };

@@ -8,12 +8,14 @@ import {
   invitationAction,
   orgAccepteAction,
   pendingOrgAction,
+  updateOrgAction,
 } from "../store/actions/orgnizastion.action";
 import { addAcceptedOrg, orgName } from "../store/reducers/org.reducer";
 
 const useOrganizastion = () => {
   const dispatch = useDispatch();
   const { message, orgName: orgname } = useSelector((state) => state.org);
+  const { myOrgs } = useSelector((state) => state.org);
   const { user } = useSelector((state) => state.auth);
   const { orgs } = useSelector((state) => state.org);
   const createOrganizastion = (body) => {
@@ -22,6 +24,7 @@ const useOrganizastion = () => {
   const getMyOrganizastion = () => {
     return dispatch(getMyOrganizationAction());
   };
+
   const deleteOrg = (body) => {
     return dispatch(deleteOrganizationAction(body));
   };
@@ -46,6 +49,9 @@ const useOrganizastion = () => {
   const orgsHandle = (id, name) => {
     return dispatch(addAcceptedOrg({ id, name }));
   };
+  const updateOrg = ({ id, name }) => {
+    return dispatch(updateOrgAction({ id, name }));
+  };
 
   return {
     createOrganizastion,
@@ -61,7 +67,9 @@ const useOrganizastion = () => {
     orgname,
     createTodoForOrg,
     orgsHandle,
-    orgs
+    orgs,
+    myOrgs,
+    updateOrg,
   };
 };
 

@@ -9,9 +9,9 @@ import ChangePassword from "../pages/auth/change-password";
 import Todo from "../pages/todo-dasbord";
 import PublicLayout from "../layout/PublicLayout";
 import PrivateLayout from "../layout/PrivateLayout";
-import OrganizationTabs from "../pages/organization";
 import OrganizationTodo from "../view/OrganizationTodo";
-
+import ManageOrganization from "../pages/manage-organization";
+import ProfilePage from "../pages/profile";
 const router = createBrowserRouter([
   {
     element: <PublicLayout />,
@@ -25,30 +25,40 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "dashboard",
+    path: "switch",
     element: <PrivateLayout />,
     children: [
       {
         index: true,
         element: <Todo />,
       },
+    ],
+  },
+  {
+    path: "todo",
+    element: <PrivateLayout />,
+    children: [{ index: true, element: <OrganizationTodo /> }],
+  },
+  {
+    path: "manage-organization",
+    element: <PrivateLayout />,
+    children: [
       {
-        path: "todo/:id",
-        element: <OrganizationTodo />,
+        index: true,
+        element: <ManageOrganization />,
+      },
+    ],
+  },
+  {
+    path: "profile",
+    element: <PrivateLayout />,
+    children: [
+      {
+        index: true,
+        element: <ProfilePage />,
       },
     ],
   },
 ]);
 
 export default router;
-
-// {
-//   path: "all-Organization",
-//   element: <OrganizationTabs />,
-//   children: [
-//     {
-//       path: "todo/:id",
-//       element: <OrganizationTodo />,
-//     },
-//   ],
-// },

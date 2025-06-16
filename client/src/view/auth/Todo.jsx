@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import useOrganizastion from "../../hooks/useOrganizastion";
-import { Link } from "react-router-dom";
-import { FaShare } from "react-icons/fa";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -16,29 +13,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
-import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
 import useAuth from "../../hooks/useAuth";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+
 const Todo = () => {
-  const {
-    invitastionAll,
-    getMyOrganizastion,
-    createOrganizastion,
-    deleteOrg,
-    orgInvitation,
-    setOrgname: toSetOrgName,
-    orgs,
-  } = useOrganizastion();
+  const { invitastionAll, getMyOrganizastion, createOrganizastion, orgs } =
+    useOrganizastion();
   const { user } = useAuth();
 
   const navigastion = useNavigate();
-  const [acceptedOrganizations, setAcceptedOrganizations] = useState([]);
   const [allOrganizations, setAllOrganizations] = useState([]);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [message, setErr] = useState();
-  const [orgName, setOrgname] = useState(null);
-
-  const [email, setEmail] = useState("");
 
   const {
     register: prgRegister,
@@ -51,8 +36,14 @@ const Todo = () => {
       try {
         invitastionAll();
         const all = await getMyOrganizastion().unwrap();
+        setAllOrganizations([...all].reverse());
 
-        setAllOrganizations(all);
+        const orgId = localStorage.getItem("orgId");
+        if (orgId) {
+          navigastion(`/todo`);
+        } else {
+          navigastion("/switch");
+        }
       } catch (error) {
         console.log(error);
       }
@@ -60,70 +51,24 @@ const Todo = () => {
   }, []);
 
   const orgSubmit = async (data) => {
-    orgRest();
     try {
-      await createOrganizastion(data).unwrap();
+      const created = await createOrganizastion(data).unwrap();
       toast.success("Organization created");
+      orgRest();
+
       const response = await getMyOrganizastion().unwrap();
-      setAllOrganizations(response?.reverse());
+      setAllOrganizations([...response].reverse());
     } catch (error) {
+      console.log(error);
       toast.error("Failed to create organization");
     }
   };
-  const deleteHandle = async (orgId) => {
-    try {
-      await deleteOrg(orgId);
-      const response = await getMyOrganizastion().unwrap();
-      setAllOrganizations(response?.reverse());
-    } catch (error) {
-      console.log("Error deleting organization: ", error);
-    }
-  };
-  const handleDelete = async (orgId) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteHandle(orgId);
 
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
-      }
-    });
-  };
-  const handleShare = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await orgInvitation({
-        id: orgName.id,
-        email: email,
-      }).unwrap();
-      toast.success(response);
-      setDialogOpen(false);
-    } catch (error) {
-      setErr(error);
-      console.log(error);
-      setDialogOpen(true);
-    }
-
-    setEmail("");
-  };
   const todoView = (id, name) => {
-
     if (!id) return;
-
-    toSetOrgName(name);
-    navigastion(`./todo/${id}`);
+    localStorage.setItem("orgId", id);
+    localStorage.setItem("orgName", name);
+    return navigastion(`/todo/`);
   };
 
   return (
@@ -183,31 +128,29 @@ const Todo = () => {
         </div>
 
         <div className="p-6 max-h-64 overflow-y-auto">
-          <h3 className="text-md font-bold mb-2  text-blue-700">
+          <h3 className="text-md font-bold mb-2 text-blue-700">
             Accepted Organizations
           </h3>
           <ul className="space-y-3">
             {orgs.length > 0 ? (
               orgs.map((org) => (
-                <button
-                  onClick={() =>
-                    todoView(
-                      org?.organization?.id || org.id,
-                      org.organization?.name
-                    )
-                  }
-                  className="w-full"
-                  key={org.id || org.organization?.id}
-                >
-                  <li
-                    key={org.id || org.organization?.id}
-                    className="p-4 bg-gray-50 rounded-lg shadow hover:bg-gray-100 transition"
+                <li key={org.id || org.organization?.id}>
+                  <button
+                    onClick={() =>
+                      todoView(
+                        org?.organization?.id || org.id,
+                        org.organization?.name
+                      )
+                    }
+                    className="w-full"
                   >
-                    <h3 className="text-lg text-left font-medium">
-                      {org.name || org.organization?.name}
-                    </h3>
-                  </li>
-                </button>
+                    <div className="p-4 bg-gray-50 rounded-lg shadow hover:bg-gray-100 transition text-left">
+                      <h3 className="text-lg font-medium">
+                        {org.name || org.organization?.name}
+                      </h3>
+                    </div>
+                  </button>
+                </li>
               ))
             ) : (
               <li className="text-gray-500">
@@ -219,6 +162,7 @@ const Todo = () => {
 
         <hr className="border-t border-gray-300 mx-6 my-2" />
 
+        {/* My Organizations */}
         <div className="p-6 max-h-64 overflow-y-auto">
           <h3 className="text-md font-bold mb-2 text-green-700">
             My Organizations
@@ -228,108 +172,23 @@ const Todo = () => {
               allOrganizations.map((org) => (
                 <li
                   key={org.id}
-                  className="p-4 bg-gray-100 rounded-lg shadow flex justify-between items-center hover:bg-gray-200 transition cursor-pointer"
-                  onClick={() => todoView(org.id, org.name)}
+                  className="p-4 bg-gray-100 rounded-lg shadow flex justify-between items-center hover:bg-gray-200 transition"
                 >
                   <h3 className="text-lg font-medium">{org.name}</h3>
-
                   <div
                     className="flex items-center gap-4"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <MdDelete
-                      fontSize={"22px"}
-                      color="red"
-                      className="cursor-pointer"
-                      onClick={() => handleDelete(org?.id)}
-                    />
-
-                    <Dialog
-                      open={dialogOpen}
-                      onOpenChange={(val) => {
-                        setDialogOpen(val);
-                        setErr("");
-                      }}
+                    <button
+                      type="button"
+                      onClick={() => todoView(org.id, org.name)}
+                      className="p-1"
                     >
-                      <DialogTrigger asChild>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setOrgname({ name: org.name, id: org.id });
-                            setEmail("");
-                            setDialogOpen(true);
-                            setErr("");
-                          }}
-                          className="p-1"
-                        >
-                          <FaShare className="cursor-pointer" />
-                        </button>
-                      </DialogTrigger>
-
-                      <DialogContent className="sm:max-w-[425px]">
-                        <form onSubmit={handleShare}>
-                          <DialogHeader>
-                            <DialogTitle>Share via Email</DialogTitle>
-                            <h2>
-                              Share this organization:{" "}
-                              <span className="font-bold text-blue-600">
-                                {org.name}
-                              </span>
-                            </h2>
-                            <DialogDescription>
-                              Enter the email address to share the organization.
-                            </DialogDescription>
-                          </DialogHeader>
-
-                          <div className="grid gap-4">
-                            <div className="grid gap-3">
-                              <label htmlFor="email">Email</label>
-                              {message && (
-                                <div
-                                  className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-                                  role="alert"
-                                >
-                                  <strong className="font-bold">Failed!</strong>
-                                  <span className="block sm:inline">
-                                    {message}.
-                                  </span>
-                                </div>
-                              )}
-                              <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={email}
-                                onChange={(e) => {
-                                  setEmail(e.target.value);
-                                  setErr("");
-                                }}
-                                placeholder="Enter recipient's email"
-                                required
-                                className="border p-2 rounded"
-                              />
-                            </div>
-                          </div>
-
-                          <DialogFooter className="flex gap-20 mt-4">
-                            <DialogClose asChild>
-                              <button
-                                type="button"
-                                className="border px-4 py-2 rounded text-gray-600"
-                              >
-                                Cancel
-                              </button>
-                            </DialogClose>
-                            <button
-                              type="submit"
-                              className="bg-blue-500 text-white p-2 px-4 cursor-pointer rounded"
-                            >
-                              Share
-                            </button>
-                          </DialogFooter>
-                        </form>
-                      </DialogContent>
-                    </Dialog>
+                      <FaArrowAltCircleRight
+                        size={40}
+                        className="cursor-pointer"
+                      />
+                    </button>
                   </div>
                 </li>
               ))

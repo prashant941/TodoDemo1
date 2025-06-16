@@ -141,3 +141,19 @@ export const pendingInvitastion = AsyncHandler(async (req, res) => {
   });
   res.status(200).json(OrganizationData);
 });
+
+export const updateOrg = AsyncHandler(async (req, res) => {
+  const { orgId } = req.params;
+  const userId = req.id;
+  const { name } = req.body;
+  if (!validate(orgId))
+    return res.status(400).json({ message: "Id Not Valid" });
+  const oneOrganization = await Organization.findOne({
+    where: { id: orgId, createdBy: userId },
+  });
+  if (!oneOrganization)
+    return res.status(404).json({ message: "Organization not Found !" });
+  oneOrganization.name = name;
+  await oneOrganization.save();
+  return res.status(200).json(oneOrganization);
+});

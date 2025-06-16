@@ -5,6 +5,8 @@ import Header from "./Header";
 
 const PrivateLayout = () => {
   const isUser = useSelector((state) => state.auth.isAuthenticated);
+  console.log(isUser);
+
   if (!isUser) {
     return <Navigate to={"/"} />;
   }

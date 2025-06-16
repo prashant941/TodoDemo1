@@ -19,7 +19,7 @@ export const Organization = sequelize.define("organization", {
 });
 
 Organization.hasMany(Todo, { foreignKey: "organizationId" });
-Todo.belongsTo(Organization, { foreignKey: "organizationId" });
+Todo.belongsTo(Organization, { foreignKey: "orAganizationId" });
 
 Organization.belongsToMany(User, {
   through: "UserOrganization",
