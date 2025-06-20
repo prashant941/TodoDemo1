@@ -1,6 +1,6 @@
-import sequelize from "../config/database.js";
+import sequelize from "../config/database.ts";
 import { DataTypes } from "sequelize";
-import { Organization } from "./organization.js";
+import { Organization } from "./organization.ts";
 
 export const UserOrganization = sequelize.define("UserOrganization", {
   userId: {
@@ -14,7 +14,7 @@ export const UserOrganization = sequelize.define("UserOrganization", {
     primaryKey: true,
   },
   role: DataTypes.STRING,
-  status: DataTypes.STRING,
+  status: DataTypes.STRING, 
 });
 
 UserOrganization.belongsTo(Organization, {

@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
-import Todo from "./todo.model.js";
-import User from "./user.model.js";
+import sequelize from "../config/database.ts";
+import Todo from "./todo.model.ts";
+import User from "./user.model.ts";
 const Comment = sequelize.define("comment", {
   uuid: {
     type: DataTypes.UUID,

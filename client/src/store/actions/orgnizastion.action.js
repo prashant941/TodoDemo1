@@ -54,8 +54,6 @@ export const invitationAction = createAsyncThunk(
 
       return fulfillWithValue(response?.data?.message || "Invite sent");
     } catch (error) {
-      console.log(error);
-
       return rejectWithValue(error?.response?.data?.message);
     }
   }

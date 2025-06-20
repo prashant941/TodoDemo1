@@ -1,6 +1,6 @@
-import User from "../models/user.model.js";
+import User from "../models/user.model.ts";
 import nodemailer from 'nodemailer';
-export const EmailService = async (otp,email) => {
+export const EmailService = async (otp:number,email: string) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {

@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
-import User from "./user.model.js";
+import sequelize from "../config/database.ts";
+import User from "./user.model.ts";
 
 const Todo = sequelize.define("Todo", {
   uuid: {

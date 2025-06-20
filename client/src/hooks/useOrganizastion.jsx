@@ -10,7 +10,11 @@ import {
   pendingOrgAction,
   updateOrgAction,
 } from "../store/actions/orgnizastion.action";
-import { addAcceptedOrg, orgName } from "../store/reducers/org.reducer";
+import {
+  addAcceptedOrg,
+  clearMessageAction,
+  orgName,
+} from "../store/reducers/org.reducer";
 
 const useOrganizastion = () => {
   const dispatch = useDispatch();
@@ -52,7 +56,9 @@ const useOrganizastion = () => {
   const updateOrg = ({ id, name }) => {
     return dispatch(updateOrgAction({ id, name }));
   };
-
+  const clearMessage = () => {
+    return dispatch(clearMessageAction());
+  };
   return {
     createOrganizastion,
     message,
@@ -70,6 +76,7 @@ const useOrganizastion = () => {
     orgs,
     myOrgs,
     updateOrg,
+    clearMessage,
   };
 };
 

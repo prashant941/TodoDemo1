@@ -3,10 +3,11 @@ import {
   createOrganizationAction,
   getMyOrganizationAction,
   invitastionAllOrgAction,
+  invitationAction,
 } from "../actions/orgnizastion.action";
 const initialState = {
   loding: "",
-  message: "",
+  message: null,
   orgName: "",
   orgs: [],
   myOrgs: [],
@@ -21,10 +22,15 @@ const orgSlice = createSlice({
     addAcceptedOrg: (state, action) => {
       state.orgs.push(action.payload);
     },
+    clearMessageAction: (state) => {
+      state.message = "";
+      state.loding = "";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createOrganizationAction.pending, (state) => {
       state.loding = "creatingOrg";
+      state.message = null;
     });
     builder.addCase(createOrganizationAction.fulfilled, (state, action) => {
       state.message = "Created";
@@ -34,9 +40,21 @@ const orgSlice = createSlice({
       state.message = action.payload;
       state.loding = "";
     });
-
+    builder.addCase(invitationAction.pending, (state) => {
+      state.loding = "inviting";
+      state.message = null;
+    });
+    builder.addCase(invitationAction.fulfilled, (state, action) => {
+      state.message = action.payload;
+      state.loding = "";
+    });
+    builder.addCase(invitationAction.rejected, (state, action) => {
+      state.message = action.payload;
+      state.loding = "";
+    });
     builder.addCase(invitastionAllOrgAction.pending, (state) => {
       state.loding = "fetchingOrg";
+      state.message = null;
     });
     builder.addCase(invitastionAllOrgAction.fulfilled, (state, action) => {
       state.orgs = action.payload;
@@ -48,6 +66,7 @@ const orgSlice = createSlice({
     });
     builder.addCase(getMyOrganizationAction.pending, (state) => {
       state.loding = "fetchingMyOrg";
+      state.message = null;
     });
     builder.addCase(getMyOrganizationAction.fulfilled, (state, action) => {
       state.myOrgs = action.payload;
@@ -61,4 +80,4 @@ const orgSlice = createSlice({
 });
 
 export default orgSlice.reducer;
-export const { orgName, addAcceptedOrg } = orgSlice.actions;
+export const { orgName, addAcceptedOrg, clearMessageAction } = orgSlice.actions;

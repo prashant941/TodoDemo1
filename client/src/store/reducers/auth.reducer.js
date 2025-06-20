@@ -30,7 +30,6 @@ const authSlice = createSlice({
       state.isLoading = "signUp";
       state.isError = false;
       state.message = "";
-      s;
       state.isAuthenticated = false;
     });
     builder.addCase(signUpAction.fulfilled, (state, action) => {

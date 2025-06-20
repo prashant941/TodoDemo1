@@ -29,10 +29,13 @@ const Registrastion = () => {
   const onSubmit = async (data) => {
     try {
       localStorage.removeItem("orgId");
+
       await signUp(data).unwrap();
       toast.success("sign-up successfully");
       reset();
     } catch (error) {
+      console.log(error);
+
       console.log("Register Faild");
     }
   };

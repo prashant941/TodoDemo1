@@ -1,7 +1,7 @@
-import sequelize from "../config/database.js";
+import sequelize from "../config/database.ts";
 import { DataTypes } from "sequelize";
-import User from "./user.model.js";
-import Todo from "./todo.model.js";
+import User from "./user.model.ts";
+import Todo from "./todo.model.ts";
 export const Organization = sequelize.define("organization", {
   id: {
     type: DataTypes.UUID,

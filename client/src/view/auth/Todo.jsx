@@ -18,8 +18,13 @@ import useAuth from "../../hooks/useAuth";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 
 const Todo = () => {
-  const { invitastionAll, getMyOrganizastion, createOrganizastion, orgs } =
-    useOrganizastion();
+  const {
+    invitastionAll,
+    getMyOrganizastion,
+    createOrganizastion,
+    clearMessage,
+    orgs,
+  } = useOrganizastion();
   const { user } = useAuth();
 
   const navigastion = useNavigate();
@@ -53,6 +58,7 @@ const Todo = () => {
   const orgSubmit = async (data) => {
     try {
       const created = await createOrganizastion(data).unwrap();
+      clearMessage();
       toast.success("Organization created");
       orgRest();
 

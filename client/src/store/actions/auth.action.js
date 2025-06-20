@@ -6,7 +6,7 @@ export const signUpAction = createAsyncThunk(
   async (arg, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await api.post("auth/sign-up", arg);
-
+      
       return fulfillWithValue(response?.data?.message);
     } catch (error) {
       console.log(error);

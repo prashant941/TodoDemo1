@@ -19,6 +19,7 @@ const OrganizationTable = () => {
   const [data, setData] = useState([]);
   const [editOrgId, setEditOrgId] = useState(null);
   const [orgName, setOrgName] = useState("");
+  const [open, setOpen] = useState(false);
   const [orgId, setOrgId] = useState("");
   useEffect(() => {
     (async () => {
@@ -180,17 +181,21 @@ const OrganizationTable = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <Dialog>
+                      <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger>
                           <IoShareSocialSharp
                             size={25}
                             className="cursor-pointer text-gray-600 hover:text-blue-600 transition-colors"
                             onClick={() => {
                               shareHandle(org.id);
+                              setOpen(true);
                             }}
                           />
                         </DialogTrigger>
-                        <Share orgId={orgId} />
+                        <Share
+                          orgId={orgId || null}
+                          onClose={() => setOpen(false)}
+                        />
                       </Dialog>
                     </td>
                   </tr>
