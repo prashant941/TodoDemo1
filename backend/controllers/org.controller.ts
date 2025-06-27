@@ -12,7 +12,7 @@ interface AuthRequest extends Request {
 
 export const createOrganization = AsyncHandler(
   async (req: AuthRequest, res: Response) => {
-    const { name }:{name:string} = req.body;
+    const { name }: { name: string } = req.body;
     const userID = req.id;
 
     if (!name || !userID) {
@@ -115,12 +115,13 @@ export const respondInvite = AsyncHandler(
 export const allInvitations = AsyncHandler(
   async (req: AuthRequest, res: Response) => {
     const userId = req.id;
+    console.log("===============userId", userId);
 
     const organizations = await UserOrganization.findAll({
       where: {
-        userId,
-        status: "accepted",
-        role: { [Op.ne]: "admin" },
+        userId: userId,
+        status: "accept",
+        role: "viewer",
       },
       include: [
         {

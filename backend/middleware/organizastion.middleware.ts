@@ -1,11 +1,12 @@
-import jwt from 'jsonwebtoken';
-import type { JwtPayload } from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import type { JwtPayload } from "jsonwebtoken";
 import User from "../models/user.model.ts";
-import type { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from "express";
 
 interface AuthenticatedRequest extends Request {
   user?: any;
   id?: string;
+  orgId?: string;
 }
 
 export const OrganizationMiddleware = async (
@@ -14,6 +15,7 @@ export const OrganizationMiddleware = async (
   next: NextFunction
 ) => {
   const token = req.cookies?.token;
+  const { orgId } = req.params;
 
   if (!token) {
     return res.status(401).json({ message: "Token Not Provided" });
@@ -37,6 +39,7 @@ export const OrganizationMiddleware = async (
     const plainUser = userData.get(); // Plain object
     req.user = plainUser;
     req.id = plainUser.uuid;
+    req.orgId = orgId;
     next();
   } catch (error) {
     return res.status(401).json({ message: "Token is expired or invalid" });

@@ -93,6 +93,7 @@ interface UpdateTodoBody {
 }
 export const updateTodo = AsyncHandler(
   async (req: AuthenticatedRequest<UpdateTodoBody>, res: Response) => {
+    
     const { title, orgId } = req.body;
     const { id: todoId } = req.params;
 

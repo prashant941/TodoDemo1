@@ -87,7 +87,7 @@ export const login = AsyncHandler(
       secure: false,
       sameSite: "lax",
       path: "/",
-      maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
+      maxAge: 2 * 24 * 60 * 60 * 1000, 
     });
 
     const userObj = userExists.get({ plain: true });
