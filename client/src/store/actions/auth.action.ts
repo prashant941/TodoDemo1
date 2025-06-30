@@ -1,15 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../lib/axios";
 import type {
-  SignUpPayload,
-  SignInPayload,
-  ResetPasswordPayload,
-  ForgetPasswordPayload,
-  AuthResponse,
-  UserProfile,
+  ISignUpPayload,
+  ISignInPayload,
+  IResetPasswordPayload,
+  IForgetPasswordPayload,
+  IAuthResponse,
+  IUserProfile,
 } from "../../types/auth.types";
 
-export const signUpAction = createAsyncThunk<string, SignUpPayload>(
+export const signUpAction = createAsyncThunk<string, ISignUpPayload>(
   "auth/signup",
   async (arg, { fulfillWithValue, rejectWithValue }) => {
     try {
@@ -23,7 +23,7 @@ export const signUpAction = createAsyncThunk<string, SignUpPayload>(
   }
 );
 
-export const signInAction = createAsyncThunk<AuthResponse, SignInPayload>(
+export const signInAction = createAsyncThunk<IAuthResponse, ISignInPayload>(
   "auth/signin",
   async (arg, { fulfillWithValue, rejectWithValue }) => {
     try {
@@ -45,7 +45,7 @@ export const signInAction = createAsyncThunk<AuthResponse, SignInPayload>(
   }
 );
 
-export const profileAction = createAsyncThunk<UserProfile>(
+export const profileAction = createAsyncThunk<IUserProfile>(
   "auth/me",
   async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
@@ -75,7 +75,7 @@ export const logoutAction = createAsyncThunk<string>(
 
 export const forgetPasswordAction = createAsyncThunk<
   any,
-  ForgetPasswordPayload
+  IForgetPasswordPayload
 >("auth/forgetpassword", async (arg, { fulfillWithValue, rejectWithValue }) => {
   try {
     const response = await api.post("auth/forget-password", arg);
@@ -85,7 +85,7 @@ export const forgetPasswordAction = createAsyncThunk<
   }
 });
 
-export const resetPasswordAction = createAsyncThunk<any, ResetPasswordPayload>(
+export const resetPasswordAction = createAsyncThunk<any, IResetPasswordPayload>(
   "auth/resetpassword",
   async (arg, { fulfillWithValue, rejectWithValue }) => {
     try {

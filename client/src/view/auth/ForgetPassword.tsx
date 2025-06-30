@@ -15,7 +15,6 @@ const ForgetPassword = () => {
       toast(message);
       navigastion("/reset-password");
     } catch (error: any) {
-      console.log("🚀 ~ submitHandle ~ error:", typeof error);
 
       setMessage(error);
     }

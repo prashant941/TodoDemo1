@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import useOrganizastion from "../../hooks/useOrganizastion";
 import { useNavigate } from "react-router-dom";
 
@@ -60,6 +60,7 @@ const Todo = () => {
   useEffect(() => {
     (async () => {
       try {
+        localStorage.setItem("UssdfbhsjdgfhjsdId", user.uuid);
         invitastionAll();
         const all = await getMyOrganizastion().unwrap();
         setAllOrganizations([...all].reverse());

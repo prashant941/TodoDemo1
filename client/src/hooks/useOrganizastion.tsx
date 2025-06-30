@@ -15,7 +15,7 @@ import {
   clearMessageAction,
   orgName,
 } from "../store/reducers/org.reducer";
-import { orgInterface } from "../types/org.types";
+import { IorgInterface } from "../types/org.types";
 import type { AppDispatch, RootState } from "../store/index";
 const useOrganizastion = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -24,7 +24,7 @@ const useOrganizastion = () => {
   const { myOrgs } = useTypedSelector((state) => state.org);
   const { user } = useTypedSelector((state) => state.auth);
   const { orgs } = useTypedSelector((state) => state.org);
-  const createOrganizastion = (body: orgInterface) => {
+  const createOrganizastion = (body: IorgInterface) => {
     return dispatch(createOrganizationAction(body));
   };
   const getMyOrganizastion = () => {
@@ -49,7 +49,7 @@ const useOrganizastion = () => {
   const setOrgname = (body: string) => {
     dispatch(orgName(body));
   };
-  const createTodoForOrg = ({ id, title }: orgInterface) => {
+  const createTodoForOrg = ({ id, title }: IorgInterface) => {
     return dispatch(createTodoForOrgAction({ id, title: title! }));
   };
   const orgsHandle = (id: string, name: string) => {

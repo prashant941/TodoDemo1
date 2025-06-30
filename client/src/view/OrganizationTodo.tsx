@@ -7,10 +7,11 @@ import { MdEdit } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Dialog, DialogTrigger } from "../components/ui/dialog";
 import DialogUpdate from "./DialogUpdate";
-import { orgInterface } from "../types/org.types";
-
+import { IorgInterface } from "../types/org.types";
+import useAuth from "../hooks/useAuth";
 const OrganizationTodo = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const orgId = localStorage.getItem("orgId");
   if (!orgId) {
     return (
@@ -21,7 +22,7 @@ const OrganizationTodo = () => {
       </div>
     );
   }
-  const [todoData, setTodoData] = useState<orgInterface[]>([]);
+  const [todoData, setTodoData] = useState<IorgInterface[]>([]);
   const [inputValue, setInputValue] = useState("");
   const { createTodoForOrg } = useOrganizastion();
   const { orgTodo, deleteTodo } = useTodo();
@@ -30,7 +31,6 @@ const OrganizationTodo = () => {
     (async () => {
       try {
         const data = await orgTodo(orgId).unwrap();
-        console.log(data);
 
         setTodoData(data);
       } catch (error) {
@@ -42,6 +42,12 @@ const OrganizationTodo = () => {
     })();
   }, [orgId]);
 
+  useEffect(() => {
+    if (user.uuid !== localStorage.getItem("UssdfbhsjdgfhjsdId")) {
+      localStorage.removeItem("orgId");
+      navigate("/switch");
+    }
+  }, []);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

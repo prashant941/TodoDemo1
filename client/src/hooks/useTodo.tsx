@@ -8,7 +8,7 @@ import {
 } from "../store/actions/todo.actions";
 import { addTodoOptimistic, removeTodo } from "../store/reducers/todo.reducer";
 import { allOrgTodoAction } from "../store/actions/orgnizastion.action";
-import { orgInterface } from "../types/org.types";
+import { IorgInterface } from "../types/org.types";
 
 const useTodo = () => {
   const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -24,7 +24,7 @@ const useTodo = () => {
   const OptimisticAddTodo = (body: object) => {
     return dispatch(addTodoOptimistic(body));
   };
-  const deleteTodo = ({ id, orgId }: orgInterface) => {
+  const deleteTodo = ({ id, orgId }: IorgInterface) => {
     return dispatch(deleteTodoAction({ id, orgId: orgId! }));
   };
   const removeTodos = (id: string) => {

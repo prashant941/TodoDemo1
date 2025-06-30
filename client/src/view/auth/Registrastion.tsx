@@ -13,7 +13,7 @@ import Loader from "../../components/Loader";
 import useAuth from "../../hooks/useAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../schema/auth.schema";
-import { SignUpPayload } from "../../types/auth.types";
+import { ISignUpPayload } from "../../types/auth.types";
 
 const Registrastion = () => {
   const {
@@ -27,7 +27,7 @@ const Registrastion = () => {
 
   const { signUp, isLoading, message, clearMessage } = useAuth();
 
-  const onSubmit = async (data: SignUpPayload) => {
+  const onSubmit = async (data: ISignUpPayload) => {
     try {
       localStorage.removeItem("orgId");
 

@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { Dialog, DialogTrigger } from "../components/ui/dialog";
 import LoginForm from "./auth/LoginForm";
-import { stateMange } from "../types/auth.types";
+import { IstateMange } from "../types/auth.types";
 
 const Home = () => {
   const isLogin = useSelector(
-    (state: stateMange) => state.auth?.isAuthenticated
+    (state: IstateMange) => state.auth?.isAuthenticated
   );
   const orgId = localStorage.getItem("orgId");
   if (isLogin && orgId) {

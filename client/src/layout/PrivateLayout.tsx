@@ -7,7 +7,6 @@ import { RootState } from "../store";
 const PrivateLayout = () => {
   const useSelectoHook: TypedUseSelectorHook<RootState> = useSelector;
   const isUser = useSelectoHook((state) => state.auth.isAuthenticated);
-  console.log(isUser);
 
   if (!isUser) {
     return <Navigate to={"/"} />;

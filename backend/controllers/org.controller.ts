@@ -115,7 +115,6 @@ export const respondInvite = AsyncHandler(
 export const allInvitations = AsyncHandler(
   async (req: AuthRequest, res: Response) => {
     const userId = req.id;
-    console.log("===============userId", userId);
 
     const organizations = await UserOrganization.findAll({
       where: {

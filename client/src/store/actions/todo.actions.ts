@@ -51,8 +51,7 @@ export const updateTodo = createAsyncThunk(
   "todo/update",
   async ({ id, data }:{id:string,data:{}}, { fulfillWithValue, rejectWithValue }) => {
     try {
-      console.log("🚀 ~ id:", id);
-      console.log("🚀 ~ data:", data);
+ 
 
       const response = await api.put(`todos/update/${id}`, data, {
         withCredentials: true,

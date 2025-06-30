@@ -16,7 +16,7 @@ import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useAuth from "../../hooks/useAuth";
-import { SignInPayload } from "../../types/auth.types";
+import { ISignInPayload } from "../../types/auth.types";
 
 const LoginForm = () => {
   const {
@@ -26,11 +26,11 @@ const LoginForm = () => {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
-  const { isAuthenticated, isError, isLoading, signIn } = useAuth();
+  const { isAuthenticated, isError, isLoading, signIn, user } = useAuth();
   const [message, setMessage] = useState("");
   const isOpen = true;
 
-  const onSubmit = async (Data: SignInPayload) => {
+  const onSubmit = async (Data: ISignInPayload) => {
     const result = await signIn(Data);
     const { message, status } = result.payload as {
       message: string;
@@ -39,6 +39,7 @@ const LoginForm = () => {
 
     if (status === 200) {
       setMessage("");
+
       toast.success(message);
     } else {
       setMessage(message);

@@ -28,9 +28,14 @@ const OrganizationTabs = () => {
   } = useOrganizastion();
 
   const [activeTab, setActiveTab] = useState("all");
-  const [allOrganizations, setAllOrganizations] = useState<{organization:{id:string,name:string},name:string,id:string}[]>([]);
+  const [allOrganizations, setAllOrganizations] = useState<
+    { organization: { id: string; name: string }; name: string; id: string }[]
+  >([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [orgName, setOrgname] = useState<{id:string,name:string}>({id:"",name:""});
+  const [orgName, setOrgname] = useState<{ id: string; name: string }>({
+    id: "",
+    name: "",
+  });
   const [email, setEmail] = useState<string>("");
   const [message, setErr] = useState<string>("");
   const [acceptedOrganizations, setAcceptedOrganizations] = useState([]);
@@ -75,7 +80,7 @@ const OrganizationTabs = () => {
     setEmail("");
   };
 
-  const orgHandle = (id:string, name:string) => {
+  const orgHandle = (id: string, name: string) => {
     if (!id) return;
     toSetOrgName(name);
     navigastion(`./todo/${id}`);

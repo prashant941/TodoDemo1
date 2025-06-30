@@ -1,36 +1,36 @@
-export interface SignUpPayload {
+export interface ISignUpPayload {
   name: string;
   email: string;
   password: string;
 }
 
-export interface SignInPayload {
+export interface ISignInPayload {
   email: string;
   password: string;
 }
 
-export interface ForgetPasswordPayload {
+export interface IForgetPasswordPayload {
   email: string;
 }
 
-export interface ResetPasswordPayload {
+export interface IResetPasswordPayload {
   token?: string;
   newPassword?: string;
-  otp?:string | object
+  otp?: string | object;
 }
 
-export interface AuthResponse {
+export interface IAuthResponse {
   message: string;
   status: number;
   data: any;
 }
 
-export interface UserProfile {
+export interface IUserProfile {
   id: string;
   name: string;
   email: string;
 }
-export interface AuthState {
+export interface IAuthState {
   user: any;
   isAuthenticated: boolean;
   isLoading: string | boolean;
@@ -38,8 +38,8 @@ export interface AuthState {
   message: string;
 }
 
-export type stateMange = {
-  auth?: AuthState;
+export type IstateMange = {
+  auth?: IAuthState;
   org?: object;
   todo?: object;
 };

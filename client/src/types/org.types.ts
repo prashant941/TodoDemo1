@@ -1,4 +1,4 @@
-export interface orgInterface{
+export interface IorgInterface{
     id: string,
     name?:string,
     email?:string,

@@ -7,9 +7,9 @@ import {
   signInAction,
   signUpAction,
 } from "../actions/auth.action";
-import type { AuthState, UserProfile } from "../../types/auth.types";
+import type { IAuthState, IUserProfile } from "../../types/auth.types";
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
   user: {},
   isAuthenticated: false,
   isLoading: false,
@@ -85,7 +85,7 @@ const authSlice = createSlice({
     });
     builder.addCase(
       profileAction.fulfilled,
-      (state, action: PayloadAction<UserProfile>) => {
+      (state, action: PayloadAction<IUserProfile>) => {
         state.isAuthenticated = true;
         state.isLoading = false;
         state.user = action.payload;

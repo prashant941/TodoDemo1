@@ -30,7 +30,6 @@ const DialogUpdate: React.FC<DialogUpdateProps> = ({
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!title.trim()) return;
-    console.log("fsdfsdfsdfsdf", { id: todo.uuid, data: { title, orgId } });
 
     await todoUpdate({ id: todo.uuid, data: { title, orgId } });
     const response = orgTodo(orgId).unwrap();
